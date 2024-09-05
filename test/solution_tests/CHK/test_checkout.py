@@ -24,10 +24,13 @@ class TestCheckout():
         assert checkout_solution.checkout("AAAAAA") == 250
         assert checkout_solution.checkout("AAAAAAAA") == 330
         assert checkout_solution.checkout("AAAAAAAAA") == 380
-        test case with mixed SKUs and offers
+        # test case with mixed SKUs and offers
         assert checkout_solution.checkout("AABBCCDDEE") == 280
         assert checkout_solution.checkout("ABCDEABCDE") == 280
         assert checkout_solution.checkout("CCADDEEBBA") == 280
+        assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
+        assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 
 
 
