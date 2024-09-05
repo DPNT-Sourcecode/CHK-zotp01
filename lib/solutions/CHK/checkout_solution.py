@@ -42,8 +42,9 @@ def checkout(skus: str) -> int:
     # remove the free items from the total
     for free_item, free_item_count in free_items.items():
         number_of_item_type_ordered = item_counts[free_item]
-        number_of_item_type_to_discount = number_of_item_type_ordered - free_item_count if number_of_item_type_ordered > free_item_count else 0
+        number_of_item_type_to_discount = min(free_item_count, number_of_item_type_ordered)
         total -= prices[free_item] * number_of_item_type_to_discount
 
     return total
+
 
