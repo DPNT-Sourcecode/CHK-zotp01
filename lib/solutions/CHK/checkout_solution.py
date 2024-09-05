@@ -27,7 +27,7 @@ def checkout(skus: str) -> int:
             sorted_special_offers = sorted(item_extra_item_offers, key=lambda x: -x[0])
             for offer_count, offer_item in sorted_special_offers:
                 free_item_count = counts // offer_count
-                free_items[item] += free_item_count
+                free_items[offer_item] += free_item_count
                 counts %= offer_count
 
         if item_offers:
@@ -45,8 +45,3 @@ def checkout(skus: str) -> int:
         total -= prices[free_item] * number_of_item_type_to_discount
 
     return total
-
-
-
-
-
