@@ -16,3 +16,5 @@ class TestCheckout():
         assert checkout_solution.checkout("AAABBBC123@") == -1
         # test case with extra item offers
         assert checkout_solution.checkout("EEB") == 80
+        # test case with extra item offers and financial offers
+        assert checkout_solution.checkout("EEBB") == 120
