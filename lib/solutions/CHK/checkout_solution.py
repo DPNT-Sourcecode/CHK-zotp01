@@ -7,7 +7,7 @@ def checkout(skus):
     offers = {"A": (3, 130), "B": (2, 45)}
     item_counts = defaultdict(int)
 
-    for sku in skus:
+    for sku in skus.upper():
         if sku not in prices:
             return -1
         else:
@@ -21,7 +21,7 @@ def checkout(skus):
             total += (counts // offer_count) * offer_price
             counts %= offer_count
         total += counts * prices[item]
-    
+
     return total
 
 
