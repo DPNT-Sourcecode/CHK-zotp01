@@ -11,6 +11,6 @@ class TestCheckout():
         # test case with special offers
         assert checkout_solution.checkout("AAABBBC") == 225
         # test case with lower case SKUs
-        assert checkout_solution.checkout("aaaB") == 160
+        assert checkout_solution.checkout("aaa") == -1
         # test case with none alpha characters
         assert checkout_solution.checkout("AAABBBC123@") == -1

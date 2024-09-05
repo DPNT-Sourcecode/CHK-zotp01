@@ -8,7 +8,7 @@ def checkout(skus: str) -> int:
     offers = {"A": (3, 130), "B": (2, 45)}
     item_counts = defaultdict(int)
 
-    for sku in skus.upper():
+    for sku in skus:
         if sku not in prices:
             return -1
         else:
