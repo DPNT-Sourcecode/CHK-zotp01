@@ -14,3 +14,5 @@ class TestCheckout():
         assert checkout_solution.checkout("aaa") == -1
         # test case with none alpha characters
         assert checkout_solution.checkout("AAABBBC123@") == -1
+        # test case with extra item offers
+        assert checkout_solution.checkout("EEB") == 80
