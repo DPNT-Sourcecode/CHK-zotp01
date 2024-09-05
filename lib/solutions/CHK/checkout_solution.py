@@ -1,8 +1,9 @@
 from collections import defaultdict
 
+
 # noinspection PyUnusedLocal
 # skus = unicode string
-def checkout(skus):
+def checkout(skus: str) -> int:
     prices = {"A": 50, "B": 30, "C": 20, "D": 15}
     offers = {"A": (3, 130), "B": (2, 45)}
     item_counts = defaultdict(int)
@@ -23,3 +24,4 @@ def checkout(skus):
         total += counts * prices[item]
 
     return total
+
