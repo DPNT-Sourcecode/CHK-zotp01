@@ -15,8 +15,21 @@ def checkout(skus: str) -> int:
         else:
             item_counts[sku] += 1
 
-    total = 0
     free_items = defaultdict(int)
+    for item, count in item_counts.items():
+        item_extra_item_offers = extra_item_offers.get(item)
+        if item_extra_item_offers:
+            sorted_special_offers = sorted(item_extra_item_offers, key=lambda x: -x[0])
+            for offer_count, offer_item in sorted_special_offers:
+                free_count = count // offer_count
+                free_items[offer_item] += free_count
+                count %= offer_count
+
+    total = 0
+
+
+
+
     for item, count in item_counts.items():
         item_extra_item_offers = extra_item_offers.get(item)
         item_offers = offers.get(item)
@@ -46,5 +59,6 @@ def checkout(skus: str) -> int:
         total -= prices[free_item] * number_of_item_type_to_discount
 
     return total
+
 
 
