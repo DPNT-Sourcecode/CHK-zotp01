@@ -19,5 +19,10 @@ class TestCheckout():
         # test case with extra item offers and financial offers
         # should get one B free after the 2 for 45 B offer
         assert checkout_solution.checkout("EEBB") == 95
+        # test case with multiple financial offers for one sku
+        assert checkout_solution.checkout("AAAAAA") == 250
+        assert checkout_solution.checkout("AAAAAAAA") == 330
+        assert checkout_solution.checkout("AAAAAAAAA") == 380
+
 
 
