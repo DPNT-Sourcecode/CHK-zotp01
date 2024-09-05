@@ -19,14 +19,14 @@ def checkout(skus: str) -> int:
 
     for item, counts in item_counts.items():
         item_special_offers = special_offers.get(item)
-        temp_count = counts
         if item_special_offers:
             # apply the best offer first and then work down
             sorted_special_offers = sorted(item_special_offers, key=lambda x: -x[0])
             for offer_count, offer_item in sorted_special_offers:
-                if temp_count >= offer_count:
-                    item_counts[offer_item] += counts // offer_count
-                    counts %= temp_count
+                free_items = counts // offer_count
+                updated_item_count = item_counts[offer_item] - free_items
+                item_counts[offer_item] = updated_item_count if updated_item_count > 0 else 0
+                counts %= counts
 
     for item, counts in item_counts.items():
         item_offers = offers.get(item)
@@ -39,5 +39,6 @@ def checkout(skus: str) -> int:
         total += counts * prices[item]
 
     return total
+
 
 
