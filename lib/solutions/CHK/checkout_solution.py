@@ -16,9 +16,7 @@ def checkout(skus: str) -> int:
 
     item_counts = _apply_extra_item_offers(item_counts, extra_item_offers)
 
-    total = _calculate_total(item_counts, prices, offers)
-
-    return total
+    return _calculate_total(item_counts, prices, offers)
 
 
 def _apply_extra_item_offers(item_counts, extra_item_offers):
@@ -46,5 +44,6 @@ def _calculate_total(item_counts, prices, offers):
                 count %= offer_count
         total += count * prices[item]
     return total
+
 
 
