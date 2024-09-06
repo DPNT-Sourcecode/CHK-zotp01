@@ -16,7 +16,7 @@ def checkout(skus: str) -> int:
             item_counts[sku] += 1
 
     adjustments = defaultdict(int)
-    for item, count in item_counts.items():
+    for item, count in list(item_counts.items()):
         item_extra_item_offers = extra_item_offers.get(item)
         item_offers = offers.get(item)
 
@@ -50,5 +50,3 @@ def checkout(skus: str) -> int:
 
 assert checkout("CCADDEEBBA") == 280
 print(checkout("CCADDEEBBA"))
-
-
