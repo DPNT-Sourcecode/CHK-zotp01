@@ -12,41 +12,34 @@ def checkout(skus: str) -> int:
     for sku in skus:
         if sku not in prices:
             return -1
-        else:
-            item_counts[sku] += 1
+        item_counts[sku] += 1
 
-    adjustments = defaultdict(int)
-    for item, count in list(item_counts.items()):
-        item_extra_item_offers = extra_item_offers.get(item)
-        item_offers = offers.get(item)
+    _apply_extra_item_offers(item_counts, extra_item_offers)
 
-        # calculate the free items to be removed from the total after the financial offers
-        if item_extra_item_offers:
-            # apply the best offer first and then work down
-            sorted_special_offers = sorted(item_extra_item_offers, key=lambda x: -x[0])
-            for offer_count, offer_item in sorted_special_offers:
-                free_item_count = count // offer_count
-                number_of_free_item_to_pay_for = item_counts[offer_item] - free_item_count if item_counts[offer_item] > free_item_count else 0
-                adjustments[offer_item] = number_of_free_item_to_pay_for
-                count %= offer_count
-
-    for item, adjusted_count in adjustments.items():
-        item_counts[item] = adjusted_count
-
-    total = 0
-    for item, count in item_counts.items():
-        item_extra_item_offers = extra_item_offers.get(item)
-        item_offers = offers.get(item)
-
-        if item_offers:
-            # apply the best offer first and then work down
-            sorted_offers = sorted(item_offers, key=lambda x: -x[0])
-            for offer_count, offer_price in sorted_offers:
-                total += (count // offer_count) * offer_price
-                count %= offer_count
-        total += count * prices[item]
+    total = _calculate_total(item_counts, prices, offers)
 
     return total
 
-assert checkout("CCADDEEBBA") == 280
-print(checkout("CCADDEEBBA"))
+
+def _apply_extra_item_offers(item_counts, extra_item_offers):
+    free_items = count // offer_count
+    item_counts[offer_item] = max(item_counts[offer_item] - free_items, 0)
+
+
+def _calculate_total(item_counts, prices, offers):
+    """Calculate the total price using item counts, applying applicable offers."""
+    total = 0
+    for item, count in item_counts.items():
+        if item in offers:
+            for offer_count, offer_price in offers[item]:
+                num_offers = count // offer_count
+                total += num_offers * offer_price
+                count %= offer_count
+        total += count * prices[item]
+    return total
+    """Apply extra item offers (e.g., 'buy X of A, get B free')."""
+    for item, count in item_counts.items():
+        if item in extra_item_offers:
+            for offer_count, offer_item in extra_item_offers[item]:
+                if offer_item in item_counts:
+
