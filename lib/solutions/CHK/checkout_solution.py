@@ -6,7 +6,7 @@ from solutions.CHK.models import ExtraItemOffer, Item, Offer
 # skus = unicode string
 def checkout(skus: str) -> int:
     items = {
-        "A": Item(price= 50, offers=[Offer(quantity=5, price=200), Offer(quantity=3, price=130)]),
+        "A": Item(price=50, offers=[Offer(quantity=5, price=200), Offer(quantity=3, price=130)]),
         "B": Item(price=30, offers=[Offer(quantity=2, price=45)]),
         "C": Item(price=20),
         "D": Item(price=15),
@@ -17,18 +17,33 @@ def checkout(skus: str) -> int:
         "I": Item(price=35),
         "J": Item(price=60),
         "K": Item(price=80, offers=[Offer(quantity=2, price=150)]),
+        "L": Item(price=90),
+        "M": Item(price=15),
+        "N": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="M")]),
+        "O": Item(price=10),
+        "P": Item(price=50, offers=[Offer(quantity=5, price=200)]),
+        "Q": Item(price=30, offers=[Offer(quantity=3, price=80)]),
+        "R": Item(price=50, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="Q")]),
+        "S": Item(price=30),
+        "T": Item(price=20),
+        "U": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="U")]),
+        "V": Item(price=50, offers=[Offer(quantity=3, price=130), Offer(quantity=2, price=90)]),
+        "W": Item(price=20),
+        "X": Item(price=90),
+        "Y": Item(price=10),
+        "Z": Item(price=50)
     }
 
     item_counts = defaultdict(int)
 
     for sku in skus:
-        if sku not in prices:
+        if sku not in items:
             return -1
         item_counts[sku] += 1
 
-    item_counts = _apply_extra_item_offers(item_counts, extra_item_offers)
+    item_counts = _apply_extra_item_offers(item_counts, items)
 
-    return _calculate_total(item_counts, prices, offers)
+    return _calculate_total(item_counts, items)
 
 
 def _apply_extra_item_offers(
@@ -65,6 +80,7 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
+
 
 
 
