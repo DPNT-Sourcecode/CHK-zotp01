@@ -6,6 +6,12 @@ class TestCheckout():
         assert checkout_solution.checkout("aabzc") == -1
         # test case with no items
         assert checkout_solution.checkout("") == 0
+        # test case per sku with no offers
+        assert checkout_solution.checkout("A") == 50
+        assert checkout_solution.checkout("B") == 30
+        assert checkout_solution.checkout("C") == 20
+        assert checkout_solution.checkout("D") == 15
+        assert checkout_solution.checkout("E") == 40
         # test case with no special offers
         assert checkout_solution.checkout("ABCD") == 115
         # test case with special offers
@@ -16,7 +22,6 @@ class TestCheckout():
         assert checkout_solution.checkout("AAABBBC123@") == -1
         # test case with extra item offers
         assert checkout_solution.checkout("EEB") == 80
-        assert checkout_solution.checkout("E") == 40
         # test case with extra item offers and financial offers
         # should get one B free after the 2 for 45 B offer
         assert checkout_solution.checkout("EEBB") == 110
