@@ -76,12 +76,7 @@ def _total_for_group_discount_items(
     """Apply group discounts and return the total price for all group discount items."""
     total = 0
     for discount in group_discounts:
-        if discount.skus.issubset(item_counts.keys()):
-            num_discounts = min(item_counts[sku] // discount.quantity for sku in discount.skus)
-            total += num_discounts * discount.price
-            for sku in discount.skus:
-                item_counts[sku] -= num_discounts * discount.quantity
-
+       group_items = [(sku, items[sku].price) for sku in discount.skus if sku in item_counts]
 
     return total
 
@@ -101,4 +96,5 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
