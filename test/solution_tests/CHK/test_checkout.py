@@ -95,5 +95,3 @@ class TestCheckout():
         assert checkout_solution.checkout("CCADDEEBBA") == 280
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
-
-

@@ -47,11 +47,7 @@ def checkout(skus: str) -> int:
 
     item_counts = _apply_extra_item_offers(item_counts, items)
 
-    total = _apply_group_discounts(item_counts, items, group_discounts)
-
-    total += _calculate_total(item_counts, items)
-
-    return total
+    return _calculate_total(item_counts, items, group_discounts)
 
 
 def _apply_extra_item_offers(
@@ -74,10 +70,10 @@ def _apply_extra_item_offers(
 
     return item_counts
 
-def _apply_group_discounts(
+def _total_for_group_discount_items(
     item_counts: dict[str, int], items: dict[str, Item], group_discounts: list[GroupDiscount]
 ) -> int:
-    """Apply group discounts and return the total price."""
+    """Apply group discounts and return the total price for all group discount items."""
     total = 0
     for discount in group_discounts:
         if discount.skus.issubset(item_counts.keys()):
@@ -86,12 +82,17 @@ def _apply_group_discounts(
             for sku in discount.skus:
                 item_counts[sku] -= num_discounts * discount.quantity
 
+
+    return total
+
+
 def _calculate_total(
-    item_counts: dict[str, int], items: dict[str, Item]
+    item_counts: dict[str, int], items: dict[str, Item], group_discounts: list[GroupDiscount]
 ) -> int:
     """Calculate the total price using item counts and applying applicable offers."""
-    total = 0
+    total = _total_for_group_discount_items(item_counts=item_counts, items=items, group_discounts=group_discounts)
     for item, count in item_counts.items():
+        if item in group_discounts
         if items[item].offers:
             for offer in items[item].offers:
                 num_offers = count // offer.quantity
@@ -99,6 +100,3 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
-
-
-

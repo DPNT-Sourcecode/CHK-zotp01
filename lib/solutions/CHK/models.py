@@ -21,5 +21,3 @@ class GroupDiscount(msgspec.Struct):
     skus: set[str]
     quantity: int
     price: int
-
-
