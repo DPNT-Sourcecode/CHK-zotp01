@@ -24,14 +24,14 @@ def checkout(skus: str) -> int:
         "P": Item(price=50, offers=[Offer(quantity=5, price=200)]),
         "Q": Item(price=30, offers=[Offer(quantity=3, price=80)]),
         "R": Item(price=50, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="Q")]),
-        "S": Item(price=20),
-        "T": Item(price=20),
+        "S": Item(price=20, in_group_discount=True),
+        "T": Item(price=20, in_group_discount=True),
         "U": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="U")]),
         "V": Item(price=50, offers=[Offer(quantity=3, price=130), Offer(quantity=2, price=90)]),
         "W": Item(price=20),
-        "X": Item(price=17),
-        "Y": Item(price=20),
-        "Z": Item(price=21)
+        "X": Item(price=17, in_group_discount=True),
+        "Y": Item(price=20, in_group_discount=True),
+        "Z": Item(price=21, in_group_discount=True)
     }
 
     group_discounts = [
@@ -92,7 +92,8 @@ def _calculate_total(
     """Calculate the total price using item counts and applying applicable offers."""
     total = _total_for_group_discount_items(item_counts=item_counts, items=items, group_discounts=group_discounts)
     for item, count in item_counts.items():
-        if item in group_discounts
+        if items[item].in_group_discount:
+            continue
         if items[item].offers:
             for offer in items[item].offers:
                 num_offers = count // offer.quantity
@@ -100,3 +101,4 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
