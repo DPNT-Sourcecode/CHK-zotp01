@@ -20,13 +20,6 @@ class TestCheckout():
         assert checkout_solution.checkout("aaa") == -1
         # test case with none alpha characters
         assert checkout_solution.checkout("AAABBBC123@") == -1
-        # test case with extra item offers
-        assert checkout_solution.checkout("EEB") == 80
-        # test case with extra item offers and financial offers
-        # should get one B free after the 2 for 45 B offer
-        assert checkout_solution.checkout("EEBB") == 110
-        assert checkout_solution.checkout("EEEEBB") == 160
-        assert checkout_solution.checkout("BBEEEE") == 160
         # test case with multiple financial offers for one sku
         assert checkout_solution.checkout("AAAAAA") == 250
         assert checkout_solution.checkout("AAAAAAAA") == 330
@@ -38,6 +31,16 @@ class TestCheckout():
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
 
+    def test_extra_item_offers_with_different_qualifying_and_free_items(self):
+        # test case with extra item offers
+        assert checkout_solution.checkout("EEB") == 80
+        assert checkout_solution.checkout("EE") == 80
+        # test case with extra item offers and financial offers
+        # should get one B free after the 2 for 45 B offer
+        assert checkout_solution.checkout("EEBB") == 110
+        assert checkout_solution.checkout("EEEEBB") == 160
+        assert checkout_solution.checkout("BBEEEE") == 160
+
     def test_extra_item_offers_with_identical_qualifying_and_free_items(self):
         # test adding extra item offers with the free item in the basket
         assert checkout_solution.checkout("FFF") == 20
@@ -48,5 +51,5 @@ class TestCheckout():
         # test adding extra item offers with one complete and a partial set of items in the basket
         assert checkout_solution.checkout("FFFFF") == 40
 
-
-
+    def test_mixed_extra_item_offers(self):
+        assert checkout_solution.checkout("FFFEEB") == 100

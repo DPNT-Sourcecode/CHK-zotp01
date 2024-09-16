@@ -60,5 +60,3 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
-
-
