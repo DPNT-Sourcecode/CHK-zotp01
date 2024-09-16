@@ -37,3 +37,11 @@ class TestCheckout():
         assert checkout_solution.checkout("CCADDEEBBA") == 280
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
+    def test_extra_item_offers(self):
+        # test adding extra item offers with the free item in the basket
+        assert checkout_solution.checkout("FFF") == 20
+        # test adding extra item offers without the free item in the basket
+        assert checkout_solution.checkout("FF") == 20
+        assert checkout_solution.checkout("FFA") == 70
+
