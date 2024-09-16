@@ -47,12 +47,12 @@ def checkout(skus: str) -> int:
 
 
 def _apply_extra_item_offers(
-    item_counts: dict[str, int], extra_item_offers: dict[str, list[ExtraItemOffer]]
+    item_counts: dict[str, int], items: dict[str, Item]
 ) -> dict[str, int]:
     """Apply extra item offers and return modified counts."""
     for item, count in item_counts.items():
-        if item in extra_item_offers:
-            for offer in extra_item_offers[item]:
+        if items[item].extra_item_offers:
+            for offer in items[item].extra_item_offers:
                 if offer.free_item in item_counts:
                     free_items = count // offer.quantity
                     # check if the qualifying item and free item are the same
@@ -68,18 +68,19 @@ def _apply_extra_item_offers(
 
 
 def _calculate_total(
-    item_counts: dict[str, int], prices: dict[str, int], offers: dict[str, list[Offer]]
+    item_counts: dict[str, int], items: dict[str, Item]
 ) -> int:
     """Calculate the total price using item counts and applying applicable offers."""
     total = 0
     for item, count in item_counts.items():
-        if item in offers:
-            for offer in offers[item]:
+        if items[item].offers:
+            for offer in items[item].offers:
                 num_offers = count // offer.quantity
                 total += num_offers * offer.price
                 count %= offer.quantity
-        total += count * prices[item]
+        total += count * items[item].price
     return total
+
 
 
 
