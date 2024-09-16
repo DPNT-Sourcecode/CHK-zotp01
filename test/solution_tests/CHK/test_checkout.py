@@ -76,6 +76,10 @@ class TestCheckout():
     def test_mixed_extra_item_offers(self):
         assert checkout_solution.checkout("FFFEEB") == 100
 
+    def test_group_discounts(self):
+        assert checkout_solution.checkout("STX") == 45
+        assert checkout_solution.checkout("STXSTX") == 90
+
     def test_combined_basket(self):
         # test case with mixed SKUs and offers
         assert checkout_solution.checkout("AABBCCDDEE") == 280
@@ -83,3 +87,4 @@ class TestCheckout():
         assert checkout_solution.checkout("CCADDEEBBA") == 280
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
