@@ -16,7 +16,7 @@ def checkout(skus: str) -> int:
         "H": Item(price=10, offers=[Offer(quantity=10, price=80), Offer(quantity=5, price=45)]),
         "I": Item(price=35),
         "J": Item(price=60),
-        "K": Item(price=70, offers=[Offer(quantity=2, price=150)]),
+        "K": Item(price=70, offers=[Offer(quantity=2, price=120)]),
         "L": Item(price=90),
         "M": Item(price=15),
         "N": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="M")]),
@@ -33,6 +33,10 @@ def checkout(skus: str) -> int:
         "Y": Item(price=20),
         "Z": Item(price=21)
     }
+
+    group_discounts = [
+        GroupDiscount(skus={"S", "T", "X", "Y", "Z"}, quantity=3, price=45),
+    ]
 
     item_counts = defaultdict(int)
 
@@ -80,4 +84,5 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
