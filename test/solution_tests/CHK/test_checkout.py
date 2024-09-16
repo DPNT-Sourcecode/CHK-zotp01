@@ -24,7 +24,7 @@ class TestCheckout():
         assert checkout_solution.checkout("H") == 10
         assert checkout_solution.checkout("I") == 35
         assert checkout_solution.checkout("J") == 60
-        assert checkout_solution.checkout("K") == 80
+        assert checkout_solution.checkout("K") == 70
         assert checkout_solution.checkout("L") == 90
         assert checkout_solution.checkout("M") == 15
         assert checkout_solution.checkout("N") == 40
@@ -32,18 +32,18 @@ class TestCheckout():
         assert checkout_solution.checkout("P") == 50
         assert checkout_solution.checkout("Q") == 30
         assert checkout_solution.checkout("R") == 50
-        assert checkout_solution.checkout("S") == 30
+        assert checkout_solution.checkout("S") == 20
         assert checkout_solution.checkout("T") == 20
         assert checkout_solution.checkout("U") == 40
         assert checkout_solution.checkout("V") == 50
         assert checkout_solution.checkout("W") == 20
-        assert checkout_solution.checkout("X") == 90
-        assert checkout_solution.checkout("Y") == 10
-        assert checkout_solution.checkout("Z") == 50
+        assert checkout_solution.checkout("X") == 17
+        assert checkout_solution.checkout("Y") == 20
+        assert checkout_solution.checkout("Z") == 21
 
     def test_mixed_basket_with_no_special_offers(self):
         assert checkout_solution.checkout("ABCD") == 115
-        assert checkout_solution.checkout("VWXYZ") == 220
+        assert checkout_solution.checkout("VWXY") == 107
 
     def test_with_standard_discount_offers(self):
         # test case with special offers
@@ -85,9 +85,6 @@ class TestCheckout():
         assert checkout_solution.checkout("ZZZS") == 65
         assert checkout_solution.checkout("XZYT") == 62
 
-
-
-
     def test_combined_basket(self):
         # test case with mixed SKUs and offers
         assert checkout_solution.checkout("AABBCCDDEE") == 280
@@ -95,3 +92,7 @@ class TestCheckout():
         assert checkout_solution.checkout("CCADDEEBBA") == 280
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+        assert checkout_solution.checkout("ZZZA") == 95
+        assert checkout_solution.checkout("ZZZAAA") == 175
+        assert checkout_solution.checkout("ZZZAAAFFF") == 195
+
