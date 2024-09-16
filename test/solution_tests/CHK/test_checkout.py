@@ -1,35 +1,57 @@
 from solutions.CHK import checkout_solution
 
 class TestCheckout():
-    def test_checkout(self):
+    def test_invalid_baskets(self):
         # test case with an invald SKU
         assert checkout_solution.checkout("aabzc") == -1
-        # test case with no items
+        # test case with lower case SKUs
+        assert checkout_solution.checkout("aaa") == -1
+        # test case with none alpha characters
+        assert checkout_solution.checkout("AAABBBC123@") == -1
+
+    def test_empty_basket(self):
         assert checkout_solution.checkout("") == 0
+
+    def test_valid_skus(self):
         # test case per sku with no offers
         assert checkout_solution.checkout("A") == 50
         assert checkout_solution.checkout("B") == 30
         assert checkout_solution.checkout("C") == 20
         assert checkout_solution.checkout("D") == 15
         assert checkout_solution.checkout("E") == 40
-        # test case with no special offers
+        assert checkout_solution.checkout("F") == 10
+        assert checkout_solution.checkout("G") == 20
+        assert checkout_solution.checkout("H") == 10
+        assert checkout_solution.checkout("I") == 35
+        assert checkout_solution.checkout("J") == 60
+        assert checkout_solution.checkout("K") == 80
+        assert checkout_solution.checkout("L") == 90
+        assert checkout_solution.checkout("M") == 15
+        assert checkout_solution.checkout("N") == 40
+        assert checkout_solution.checkout("O") == 10
+        assert checkout_solution.checkout("P") == 50
+        assert checkout_solution.checkout("Q") == 30
+        assert checkout_solution.checkout("R") == 50
+        assert checkout_solution.checkout("S") == 30
+        assert checkout_solution.checkout("T") == 20
+        assert checkout_solution.checkout("U") == 40
+        assert checkout_solution.checkout("V") == 50
+        assert checkout_solution.checkout("W") == 20
+        assert checkout_solution.checkout("X") == 90
+        assert checkout_solution.checkout("Y") == 10
+        assert checkout_solution.checkout("Z") == 50
+
+    def test_mixed_basket_with_no_special_offers(self):
         assert checkout_solution.checkout("ABCD") == 115
+        assert checkout_solution.checkout("VWXYZ") == 220
+
+    def test_with_standard_discount_offers(self):
         # test case with special offers
         assert checkout_solution.checkout("AAABBBC") == 225
-        # test case with lower case SKUs
-        assert checkout_solution.checkout("aaa") == -1
-        # test case with none alpha characters
-        assert checkout_solution.checkout("AAABBBC123@") == -1
         # test case with multiple financial offers for one sku
         assert checkout_solution.checkout("AAAAAA") == 250
         assert checkout_solution.checkout("AAAAAAAA") == 330
         assert checkout_solution.checkout("AAAAAAAAA") == 380
-        # test case with mixed SKUs and offers
-        assert checkout_solution.checkout("AABBCCDDEE") == 280
-        assert checkout_solution.checkout("ABCDEABCDE") == 280
-        assert checkout_solution.checkout("CCADDEEBBA") == 280
-        assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
-        assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
 
     def test_extra_item_offers_with_different_qualifying_and_free_items(self):
         # test case with extra item offers
@@ -53,3 +75,12 @@ class TestCheckout():
 
     def test_mixed_extra_item_offers(self):
         assert checkout_solution.checkout("FFFEEB") == 100
+
+    def test_combined_basket(self):
+        # test case with mixed SKUs and offers
+        assert checkout_solution.checkout("AABBCCDDEE") == 280
+        assert checkout_solution.checkout("ABCDEABCDE") == 280
+        assert checkout_solution.checkout("CCADDEEBBA") == 280
+        assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
+        assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
