@@ -41,7 +41,11 @@ class TestCheckout():
     def test_extra_item_offers(self):
         # test adding extra item offers with the free item in the basket
         assert checkout_solution.checkout("FFF") == 20
+        assert checkout_solution.checkout("FFFFFF") == 40
         # test adding extra item offers without the free item in the basket
         assert checkout_solution.checkout("FF") == 20
         assert checkout_solution.checkout("FFA") == 70
+        # test adding extra item offers with one complete and a partial set of items in the basket
+        assert checkout_solution.checkout("FFFFF") == 40
+
 
