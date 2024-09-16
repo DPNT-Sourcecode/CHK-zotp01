@@ -86,16 +86,17 @@ def _total_for_group_discount_items(
         # apply the group discount as many times as possible
         while total_applicable_items >= discount.quantity:
             total += discount.price
-            total_applicable_items -= discount.quantity
+            remaining_to_deduct = discount.quantity
 
             # discount items from highest priced to lowest to maximise savings
             for sku, _ in group_items:
-                if item_counts[sku] > 0 and total_applicable_items < discount.quantity:
-                    deduction = min(item_counts[sku], discount.quantity - total_applicable_items)
+                if remaining_to_deduct == 0:
+                    break
+                if item_counts[sku] > 0:
+                    deduction = min(item_counts[sku], remaining_to_deduct)
                     item_counts[sku] -= deduction
+                    remaining_to_deduct -= deduction
                     total_applicable_items -= deduction
-                    if total_applicable_items == 0:
-                        break
 
         # add the remaining items that did not fit into a group discount
         for sku, price in group_items:
@@ -120,6 +121,7 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
 
 
