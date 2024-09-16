@@ -5,12 +5,15 @@ from solutions.CHK.models import ExtraItemOffer, Item, Offer
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
-    prices = {
-        Item()
+    items = {
+        "A": Item(price= 50, offers=[Offer(quantity=5, price=200), Offer(quantity=3, price=130)]),
+        "B": Item(price= 30, offers=[Offer(quantity=2, price=45)]),
 
-        "A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
+
+
+            50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
     offers = {
-        "A": [Offer(quantity=5, price=200), Offer(quantity=3, price=130)],
+
         "B": [Offer(quantity=2, price=45)]
     }
     extra_item_offers = {
@@ -63,4 +66,5 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
+
 
