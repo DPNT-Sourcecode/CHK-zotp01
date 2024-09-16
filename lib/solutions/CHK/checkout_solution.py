@@ -35,7 +35,14 @@ def _apply_extra_item_offers(
             for offer in extra_item_offers[item]:
                 if offer.free_item in item_counts:
                     free_items = count // offer.quantity
-                    item_counts[offer.free_item] = max(item_counts[offer.free_item] - free_items, 0)
+                    # check if the qualifying item and free item are the same
+                    if item == offer.free_item:
+                        # ensure that we have at least the sum of the items needed for the offer and the free items
+                        applicable_free_items = count // (offer.quantity + 1)
+                        item_counts[item] -= applicable_free_items
+                    else:
+                        # standard case where qualifying and free items are different
+                        item_counts[offer.free_item] = max(item_counts[offer.free_item] - free_items, 0)
 
     return item_counts
 
@@ -53,4 +60,5 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
+
 
