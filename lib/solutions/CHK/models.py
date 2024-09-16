@@ -22,4 +22,3 @@ class Item(msgspec.Struct):
     offers: list[Offer] = []
     extra_item_offers: list[ExtraItemOffer] = []
     in_group_discount: bool = False
-

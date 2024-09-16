@@ -75,6 +75,7 @@ def _total_for_group_discount_items(
 ) -> int:
     """Apply group discounts and return the total price for all group discount items."""
     total = 0
+    group_item_count
     for discount in group_discounts:
         # basket items that ae in the group discount
         group_items = [(sku, items[sku].price) for sku in discount.skus if sku in item_counts]
@@ -121,7 +122,3 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
-
-
-
-

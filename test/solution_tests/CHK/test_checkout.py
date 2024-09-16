@@ -97,5 +97,3 @@ class TestCheckout():
         assert checkout_solution.checkout("ZZZAAA") == 175
         assert checkout_solution.checkout("ZZZAAAFFF") == 195
         assert checkout_solution.checkout("XTYSZZZZAAA") == 257
-
-
