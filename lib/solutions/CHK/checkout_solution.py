@@ -1,11 +1,14 @@
 from collections import defaultdict
-from solutions.CHK.models import ExtraItemOffer, Offer
+from solutions.CHK.models import ExtraItemOffer, Item, Offer
 
 
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
-    prices = {"A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
+    prices = {
+        Item()
+
+        "A": 50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
     offers = {
         "A": [Offer(quantity=5, price=200), Offer(quantity=3, price=130)],
         "B": [Offer(quantity=2, price=45)]
@@ -60,3 +63,4 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
+
