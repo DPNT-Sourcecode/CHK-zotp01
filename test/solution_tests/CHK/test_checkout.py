@@ -77,8 +77,16 @@ class TestCheckout():
         assert checkout_solution.checkout("FFFEEB") == 100
 
     def test_group_discounts(self):
+        assert checkout_solution.checkout("ZZZ") == 45
         assert checkout_solution.checkout("STX") == 45
-        assert checkout_solution.checkout("STXSTX") == 90
+        assert checkout_solution.checkout("STXYZS") == 90
+        # as the policy should always favour the customer, we should use the most expensive items available in the group
+        # discount
+        assert checkout_solution.checkout("ZZZS") == 65
+        assert checkout_solution.checkout("XZYT") == 62
+
+
+
 
     def test_combined_basket(self):
         # test case with mixed SKUs and offers
@@ -87,4 +95,5 @@ class TestCheckout():
         assert checkout_solution.checkout("CCADDEEBBA") == 280
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 
