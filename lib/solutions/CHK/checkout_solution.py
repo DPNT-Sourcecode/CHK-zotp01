@@ -76,7 +76,31 @@ def _total_for_group_discount_items(
     """Apply group discounts and return the total price for all group discount items."""
     total = 0
     for discount in group_discounts:
-       group_items = [(sku, items[sku].price) for sku in discount.skus if sku in item_counts]
+        # basket items that ae in the group discount
+        group_items = [(sku, items[sku].price) for sku in discount.skus if sku in item_counts]
+        # sort the items in descending price order so the most expensive are included in the group offer
+        group_items.sort(key=lambda x: x[1], reverse=True)
+
+        total_applicable_items = sum(item_counts[sku] for sku, _ in group_items)
+
+        # apply the group discount as many times as possible
+        while total_applicable_items >= discount.quantity:
+            total += discount.price
+            total_applicable_items -= discount.quantity
+
+            # discount items from highest priced to lowest to maximise savings
+            for sku, _ in group_items:
+                if item_counts[sku] > 0 and total_applicable_items < discount.quantity:
+                    deduction = min(item_counts[sku], discount.quantity - total_applicable_items)
+                    item_counts[sku] -= deduction
+                    total_applicable_items -= deduction
+                    if total_applicable_items == 0:
+                        break
+
+        # add the remaining items that did not fit into a group discount
+        for sku, price in group_items:
+            total += item_counts[sku] * price
+            item_counts[sku] = 0
 
     return total
 
@@ -96,5 +120,6 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
 
