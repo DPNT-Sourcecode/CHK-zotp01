@@ -7,19 +7,18 @@ from solutions.CHK.models import ExtraItemOffer, Item, Offer
 def checkout(skus: str) -> int:
     items = {
         "A": Item(price= 50, offers=[Offer(quantity=5, price=200), Offer(quantity=3, price=130)]),
-        "B": Item(price= 30, offers=[Offer(quantity=2, price=45)]),
-
-
-
-            50, "B": 30, "C": 20, "D": 15, "E": 40, "F": 10}
-    offers = {
-
-        "B": [Offer(quantity=2, price=45)]
+        "B": Item(price=30, offers=[Offer(quantity=2, price=45)]),
+        "C": Item(price=20),
+        "D": Item(price=15),
+        "E": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=2, free_item="B")]),
+        "F": Item(price=10, extra_item_offers=[ExtraItemOffer(quantity=2, free_item="F")]),
+        "G": Item(price=20),
+        "H": Item(price=10, offers=[Offer(quantity=10, price=80), Offer(quantity=5, price=45)]),
+        "I": Item(price=35),
+        "J": Item(price=60),
+        "K": Item(price=80, offers=[Offer(quantity=2, price=150)]),
     }
-    extra_item_offers = {
-        "E": [ExtraItemOffer(quantity=2, free_item="B")],
-        "F": [ExtraItemOffer(quantity=2, free_item="F")]
-    }
+
     item_counts = defaultdict(int)
 
     for sku in skus:
@@ -66,5 +65,6 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * prices[item]
     return total
+
 
 
