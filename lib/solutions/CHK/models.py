@@ -15,3 +15,10 @@ class Item(msgspec.Struct):
     price: int
     offers: list[Offer] = []
     extra_item_offers: list[ExtraItemOffer] = []
+
+
+class GroupDiscount(msgspec.Struct):
+    skus: list[str]
+    quantity: int
+    price: int
+

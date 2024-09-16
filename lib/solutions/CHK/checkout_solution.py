@@ -1,5 +1,5 @@
 from collections import defaultdict
-from solutions.CHK.models import ExtraItemOffer, Item, Offer
+from solutions.CHK.models import ExtraItemOffer, GroupDiscount, Item, Offer
 
 
 # noinspection PyUnusedLocal
@@ -16,7 +16,7 @@ def checkout(skus: str) -> int:
         "H": Item(price=10, offers=[Offer(quantity=10, price=80), Offer(quantity=5, price=45)]),
         "I": Item(price=35),
         "J": Item(price=60),
-        "K": Item(price=80, offers=[Offer(quantity=2, price=150)]),
+        "K": Item(price=70, offers=[Offer(quantity=2, price=150)]),
         "L": Item(price=90),
         "M": Item(price=15),
         "N": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="M")]),
@@ -24,14 +24,14 @@ def checkout(skus: str) -> int:
         "P": Item(price=50, offers=[Offer(quantity=5, price=200)]),
         "Q": Item(price=30, offers=[Offer(quantity=3, price=80)]),
         "R": Item(price=50, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="Q")]),
-        "S": Item(price=30),
+        "S": Item(price=20),
         "T": Item(price=20),
         "U": Item(price=40, extra_item_offers=[ExtraItemOffer(quantity=3, free_item="U")]),
         "V": Item(price=50, offers=[Offer(quantity=3, price=130), Offer(quantity=2, price=90)]),
         "W": Item(price=20),
-        "X": Item(price=90),
-        "Y": Item(price=10),
-        "Z": Item(price=50)
+        "X": Item(price=17),
+        "Y": Item(price=20),
+        "Z": Item(price=21)
     }
 
     item_counts = defaultdict(int)
@@ -80,3 +80,4 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
