@@ -102,8 +102,7 @@ def _total_for_group_discount_items(
 
         # add the remaining items that did not fit into a group discount
         for sku, price in group_items:
-            total += item_counts[sku] * price
-            item_counts[sku] = 0
+            total += group_item_count[sku] * price
 
     return total
 
@@ -123,5 +122,6 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
 
