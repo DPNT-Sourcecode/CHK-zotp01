@@ -47,7 +47,11 @@ def checkout(skus: str) -> int:
 
     item_counts = _apply_extra_item_offers(item_counts, items)
 
-    return _calculate_total(item_counts, items)
+    total = _apply_group_discounts(item_counts, items, group_discounts)
+
+    total += _calculate_total(item_counts, items)
+
+    return total
 
 
 def _apply_extra_item_offers(
@@ -70,6 +74,17 @@ def _apply_extra_item_offers(
 
     return item_counts
 
+def _apply_group_discounts(
+    item_counts: dict[str, int], items: dict[str, Item], group_discounts: list[GroupDiscount]
+) -> int:
+    """Apply group discounts and return the total price."""
+    total = 0
+    for discount in group_discounts:
+        if discount.skus.issubset(item_counts.keys()):
+            num_discounts = min(item_counts[sku] // discount.quantity for sku in discount.skus)
+            total += num_discounts * discount.price
+            for sku in discount.skus:
+                item_counts[sku] -= num_discounts * discount.quantity
 
 def _calculate_total(
     item_counts: dict[str, int], items: dict[str, Item]
@@ -84,5 +99,6 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
+
 
 
