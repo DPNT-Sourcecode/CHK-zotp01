@@ -80,8 +80,3 @@ def _calculate_total(
                 count %= offer.quantity
         total += count * items[item].price
     return total
-
-
-
-
-
