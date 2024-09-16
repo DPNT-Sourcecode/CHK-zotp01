@@ -38,7 +38,7 @@ class TestCheckout():
         assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
         assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
 
-    def test_extra_item_offers(self):
+    def test_extra_item_offers_with_identical_qualifying_and_free_items(self):
         # test adding extra item offers with the free item in the basket
         assert checkout_solution.checkout("FFF") == 20
         assert checkout_solution.checkout("FFFFFF") == 40
@@ -47,5 +47,6 @@ class TestCheckout():
         assert checkout_solution.checkout("FFA") == 70
         # test adding extra item offers with one complete and a partial set of items in the basket
         assert checkout_solution.checkout("FFFFF") == 40
+
 
 
